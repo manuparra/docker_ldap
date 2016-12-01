@@ -132,6 +132,69 @@ Now, try out:
 ldapsearch -H ldap://localhost -LL -b ou=Users,dc=openstack,dc=org -x
 ```
 
+It returns LDAP directory with the last user added.
+
+## Modifying LDAP user account data:
+
+The syntax of the ldapmodify tool on the command-line can take any of these forms:
+
+```
+ldapmodify [ options ]
+
+ldapmodify [ options ] < LDIFfile
+
+ldapmodify [ options ] -f LDIFfile
+```
+
+LDIF text file containing new entries or updates to existing entries on LDAP directory.
+
+When modifying the contents of a directory, you must satisfy several prerequisite conditions. 
+
+First, the bind DN and password used for authentication must have the appropriate permissions for the operations being performed.
+
+Create an example LDIF Modify and save the file as i.e. ``mparra_modify.ldif``
+
+```
+dn: cn=mparra,ou=Users,dc=openstack,dc=org
+changetype: modify
+replace: loginShell
+loginShell: /bin/csh
+```
+
+Then execute:
+
+```
+ldapmodify -x -D "cn=admin,dc=openstack,dc=org" -w password -H ldap:// -f mparra_modify.ldif
+```
+
+It will update ``cn=mparra`` with a new ``loginShell``, in this case ``/bin/csh``
+
+Check if the change has been done:
+
+```
+...
+dn: cn=mparra,ou=Users,dc=openstack,dc=org
+objectClass: top
+objectClass: account
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: mparra
+uid: mparra
+uidNumber: 16859
+gidNumber: 100
+homeDirectory: /home/mparra
+gecos: mparra
+shadowMax: 0
+shadowWarning: 0
+loginShell: /bin/csh
+...
+
+```
+
+
+
+
+
 
 
 
