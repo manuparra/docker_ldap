@@ -21,13 +21,13 @@ Default password for LDAP admin user is `password`
 
 ### Starting: everything is okay
 
-First, try out:
+Firstly, with your user try out:
 
 ```
 ldapsearch -H ldap://localhost -LL -b ou=Users,dc=openstack,dc=org -x
 ```
 
-This command returns the list of LDAP users:
+This command returns the list of LDAP users (something similar):
 
 
 ```
@@ -56,6 +56,61 @@ ou: Human Resources
 The format for a simple query with ``ldapsearch`` is: 
 
 ``ldapsearch -H <host> -LL -b ou=<Organizational Unit> -x``
+
+LDAP utility ``ldaputility`` cointains multiple options and configuration, please review: https://www.centos.org/docs/5/html/CDS/ag/8.0/Finding_Directory_Entries-Using_ldapsearch.html
+
+
+### Adding an user
+
+To add something to the LDAP directory, you need to first create a LDIF file.
+
+The ldif file should contain definitions for all attributes that are required for the entries that you want to create.
+
+With this ``ldif`` file, you can use ``ldapadd`` command to import the entries into the directory as explained in this tutorial.
+
+Create a file, i.e. ``user.ldif`` and copy this skeleton, modify and include your data (i.e. ``cn=mparra`` to ``cn=<user>``, i.e. ``uid=mparra`` to ``uid=<uid>``)
+
+```
+dn: cn=mparra,ou=Users,dc=openstack,dc=org
+objectClass: top
+objectClass: account
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: mparra
+uid: mparra
+uidNumber: 16859
+gidNumber: 100
+homeDirectory: /home/mparra
+loginShell: /bin/bash
+gecos: mparra
+userPassword: {crypt}x
+shadowLastChange: 0
+shadowMax: 0
+shadowWarning: 0
+```
+
+To add this user to LDAP directory:
+
+```
+ldapadd -x -D cn=admin,dc=openstack,dc=org -w password -c -f user1.ldif
+```
+
+Syntax:
+
+```
+ldapadd [options] [-f LDIF-filename]
+```
+
+If you remove ``-w password`` option, and change by ``-W`` it will ask you about LDAP admin password.
+
+
+
+
+
+
+
+
+
 
 
 
