@@ -1,7 +1,7 @@
 # Working with LDAP on a docker container. Starting with LDAP command-line utilities.
 
 
-Manuel Parra (manuelparra@decsai.ugr.es) & José Manuel Benítez (j.m.benitez@decsai.ugr.es), 2016
+Manuel Parra (manuelparra@decsai.ugr.es) & José Manuel Benítez (j.m.benitez@decsai.ugr.es), December 2016
 ![DICITSlogo](http://sci2s.ugr.es/dicits/images/dicits.png)
 
 
@@ -94,9 +94,9 @@ These are often used for the general categories under the top-level DIT entry, t
 ![LDAPstruct](https://sites.google.com/site/manuparra/home/Untitled.png)
 
 
-### Starting: everything is okay
+### Starting: check if everything is okay
 
-Firstly, with your user try out:
+First, with your user account (logged) try out:
 
 ```
 ldapsearch -H ldap://localhost -LL -b ou=Users,dc=openstack,dc=org -x
@@ -323,10 +323,17 @@ Then use:
 ldapadd -x -D cn=admin,dc=openstack,dc=org -w password -c -f add_new_ou.ldif
 ```
 
+### Searching into DIT
 
+For instance, if we use ``ou=People``
 
+```
+ldapsearch -H ldap://localhost -LL -b ou=People,dc=openstack,dc=org -x
+```
 
+It shows everything under ``ou=People`` from ``dc=openstack,dc=org``
 
+Any combination of ``ou``, ``dc``, ... is allowed to search into DIT.
 
 
 
