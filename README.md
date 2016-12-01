@@ -25,6 +25,69 @@ Default password for LDAP admin user is `password`
 
 ## Training with LDAP
 
+
+### Attributes
+
+The data itself in an LDAP system is mainly stored in elements called attributes. Attributes are basically key-value pairs. Unlike in some other systems, the keys have predefined names which are dictated by the objectClasses selected for entry. Furthermore, the data in an attribute must match the type defined in the attribute's initial definition.
+
+```
+...
+home: /home/mparra
+...
+```
+
+
+### Entries
+
+Attributes by themselves are not very useful. To have meaning, they must be associated with something. Within LDAP, you use attributes within an entry. 
+
+An entry is basically a collection of attributes under a name used to describe something.
+
+```
+# LDAP user entry example
+dn: cn=mparra,ou=Users,dc=openstack,dc=org
+objectClass: top
+objectClass: account
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: mparra
+...
+```
+
+
+### DIT
+
+A DIT is simply the hierarchy describing the relationship of existing entries. 
+
+Upon creation, each new entry must "hook into" the existing DIT by placing itself as a child of an existing entry.
+
+This creates a tree-like structure that is used to define relationships and assign meaning.
+
+### Distinguished name (dn)
+
+It functions like a full path back to the root of the Data Information Trees, or DITs.
+
+For example:
+
+```
+dn: cn=mparra,ou=Users,dc=openstack,dc=org
+```
+
+cn: Common name
+ou: organizational segment
+
+The direct parent is an entry called ``ou=Users`` which is being used as a container for entries describing users.
+
+The parents of this entry derived from the ``openstack.org` domain name, which functions as the root of our DIT.
+
+These are often used for the general categories under the top-level DIT entry, things like ```ou=people, ou=groups, and ou=inventory``` are common.
+
+
+### Structure
+
+![LDAPstruct](https://sites.google.com/site/manuparra/home/ou.png)
+
+
 ### Starting: everything is okay
 
 Firstly, with your user try out:
@@ -32,6 +95,8 @@ Firstly, with your user try out:
 ```
 ldapsearch -H ldap://localhost -LL -b ou=Users,dc=openstack,dc=org -x
 ```
+
+
 
 This command returns the list of LDAP users (something similar):
 
@@ -134,7 +199,7 @@ ldapsearch -H ldap://localhost -LL -b ou=Users,dc=openstack,dc=org -x
 
 It returns LDAP directory with the last user added.
 
-## Modifying LDAP user account data:
+## Modifying LDAP user account data: DELETE, MODIFY.
 
 The syntax of the ldapmodify tool on the command-line can take any of these forms:
 
