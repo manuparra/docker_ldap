@@ -1,6 +1,9 @@
-# Working with LDAP on a docker container. Starting with LDAP command-line utilities
+# Working with LDAP on a docker container. Starting with LDAP command-line utilities.
 
-Manuel Parra & José Manuel Benítez, 2016
+
+Manuel Parra (manuelparra@decsai.ugr.es) & José Manuel Benítez (j.m.benitez@decsai.ugr.es), 2016
+![DICITSlogo](http://sci2s.ugr.es/dicits/images/dicits.png)
+
 
 ![imgLDAP](http://www.openldap.org/images/headers/LDAPworm.gif)
 
@@ -74,7 +77,10 @@ dn: cn=mparra,ou=Users,dc=openstack,dc=org
 ```
 
 cn: Common name
-ou: organizational segment
+
+ou: organizational segment / Organizational Unit
+
+dc = Domain Component
 
 The direct parent is an entry called ``ou=Users`` which is being used as a container for entries describing users.
 
@@ -83,9 +89,9 @@ The parents of this entry derived from the ``openstack.org` domain name, which f
 These are often used for the general categories under the top-level DIT entry, things like ```ou=people, ou=groups, and ou=inventory``` are common.
 
 
-### Structure
+### Structure of the LDAP example
 
-![LDAPstruct](https://sites.google.com/site/manuparra/home/ou.png)
+![LDAPstruct](https://sites.google.com/site/manuparra/home/Untitled.png)
 
 
 ### Starting: everything is okay
@@ -95,8 +101,6 @@ Firstly, with your user try out:
 ```
 ldapsearch -H ldap://localhost -LL -b ou=Users,dc=openstack,dc=org -x
 ```
-
-
 
 This command returns the list of LDAP users (something similar):
 
@@ -301,13 +305,23 @@ ldapsearch -H ldap://localhost -LL -b ou=Users,dc=openstack,dc=org -x
 Verify if entity description is not set.
 
 
+### Add a OU to the LDAP:
 
+Create a new ``ldif`` file. i.e. ``add_new_ou.ldif`` with:
 
+```
+dn: ou=People,dc=openstack,dc=org
+ou: People
+objectClass: top
+objectClass: organizationalUnit
+description: Parent object of all PEOPLE accounts
+```
 
+Then use:
 
-
-
-
+```
+ldapadd -x -D cn=admin,dc=openstack,dc=org -w password -c -f add_new_ou.ldif
+```
 
 
 
