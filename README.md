@@ -191,6 +191,50 @@ loginShell: /bin/csh
 
 ```
 
+Adding a entry of LDAP user. Create a new file ``manu_add_descrip.ldif`` and add: 
+
+```
+dn: cn=mparra,ou=Users,dc=openstack,dc=org
+changetype: modify
+add: description
+description: Manuel Parra
+```
+
+Execute next command:
+
+```
+ldapmodify -x -D "cn=admin,dc=openstack,dc=org" -w password -H ldap:// -f manu_add_descrip.ldif
+```
+
+Now, check changes:
+
+
+```
+ldapsearch -H ldap://localhost -LL -b ou=Users,dc=openstack,dc=org -x
+```
+
+And finally delete description. Create a new file i.e. ``manu_del_descr.ldif``
+
+```
+dn: cn=mparra,ou=Users,dc=openstack,dc=org
+changetype: modify
+delete: description
+``` 
+
+Then execute: 
+
+```
+ldapmodify -x -D "cn=admin,dc=openstack,dc=org" -w password -H ldap:// -f manu_del_descr.ldif
+```
+
+Now, check out:
+
+```
+ldapsearch -H ldap://localhost -LL -b ou=Users,dc=openstack,dc=org -x
+```
+
+Verify if entity description is not set.
+
 
 
 
