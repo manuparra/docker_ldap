@@ -1,3 +1,9 @@
+# Working with LDAP on a docker container. Startin with LDAP command-line utilities
+
+Manuel Parra & José Manuel Benítez, 2016
+
+![imgLDAP](http://www.openldap.org/images/headers/LDAPworm.gif)
+
 
 ## Deploy Docker container with LDAP
 
@@ -68,7 +74,7 @@ The ldif file should contain definitions for all attributes that are required fo
 
 With this ``ldif`` file, you can use ``ldapadd`` command to import the entries into the directory as explained in this tutorial.
 
-Create a file, i.e. ``user.ldif`` and copy this skeleton, modify and include your data (i.e. ``cn=mparra`` to ``cn=<user>``, i.e. ``uid=mparra`` to ``uid=<uid>``)
+Create a file, i.e. ``user.ldif`` and copy this skeleton, modify and include your data (i.e. ``cn=mparra`` to ``cn=<user>``, i.e. ``uid=mparra`` to ``uid=<uid>`` , ``gecos`` etc.)
 
 ```
 dn: cn=mparra,ou=Users,dc=openstack,dc=org
@@ -102,6 +108,25 @@ ldapadd [options] [-f LDIF-filename]
 ```
 
 If you remove ``-w password`` option, and change by ``-W`` it will ask you about LDAP admin password.
+
+
+## Changing password of LDAP user
+
+```
+ldappasswd -s <new_user_password> -W -D "cn=admin,dc=openstack,dc=org" -x "cn=mparra,ou=Users,dc=openstack,dc=org"
+```
+
+In this case, using -W option, ``ldappasswd`` ask for LDAP admin password.
+
+Syntax:
+
+```
+ldappasswd [ options ] [ user ]
+```
+
+Please check: https://www.centos.org/docs/5/html/CDS/cli/8.0/Configuration_Command_File_Reference-Command_Line_Utilities-ldappasswd.html for more information about this command.
+
+
 
 
 
