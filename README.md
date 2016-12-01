@@ -5,7 +5,7 @@ Manuel Parra (manuelparra@decsai.ugr.es) & José Manuel Benítez (j.m.benitez@de
 ![DICITSlogo](http://sci2s.ugr.es/dicits/images/dicits.png)
 
 
-![imgLDAP](http://www.openldap.org/images/headers/LDAPworm.gif)
+<center><img src="http://www.openldap.org/images/headers/LDAPworm.gif"></center>
 
 
 ## Deploy Docker container with LDAP
