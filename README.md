@@ -28,6 +28,35 @@ Default password for LDAP admin user is `password`
 
 ## Training with LDAP
 
+The openldap-clients package installs tools which are used to add, modify, and delete entries in an LDAP directory. These tools include the following:
+
+* ldapadd — Adds entries to an LDAP directory by accepting input via a file or standard input; ldapadd is actually a hard link to ldapmodify -a.
+
+* ldapdelete — Deletes entries from an LDAP directory by accepting user input at a shell prompt or via a file.
+
+* ldapmodify — Modifies entries in an LDAP directory, accepting input via a file or standard input.
+
+* ldappasswd — Sets the password for an LDAP user.
+
+* ldapsearch — Searches for entries in an LDAP directory using a shell prompt.
+
+* ldapcompare — Opens a connection to an LDAP server, binds, and performs a comparison using specified parameters.
+
+* ldapwhoami — Opens a connection to an LDAP server, binds, and performs a whoami operation.
+
+* ldapmodrdn — Opens a connection to an LDAP server, binds, and modifies the RDNs of entries.
+
+
+### LDAP Basics
+
+LDAP is a lightweight protocol for accessing directory servers. Okay, so what is a directory server? It’s a hierarchical object orientated database.
+
+### Objects and Classes
+
+Data in LDAP are stored in objects. These objects contain a number of attributes, which are basically a set of key/value pairs. Because data in LDAP is structured, objects can only contain valid keys, and which keys are valid is dependant on what class the object is. Classes in LDAP can define mandatory attributes and optional attributes and their type.
+
+
+*Classes are assigned to objects using the objectClass attribute. LDAP defines some basic classes, types and comparison methods by default, but you are free to define your own.*
 
 ### Attributes
 
