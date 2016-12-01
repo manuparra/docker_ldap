@@ -1,4 +1,4 @@
-# Working with LDAP on a docker container. Startin with LDAP command-line utilities
+# Working with LDAP on a docker container. Starting with LDAP command-line utilities
 
 Manuel Parra & José Manuel Benítez, 2016
 
@@ -126,7 +126,11 @@ ldappasswd [ options ] [ user ]
 
 Please check: https://www.centos.org/docs/5/html/CDS/cli/8.0/Configuration_Command_File_Reference-Command_Line_Utilities-ldappasswd.html for more information about this command.
 
+Now, try out:
 
+```
+ldapsearch -H ldap://localhost -LL -b ou=Users,dc=openstack,dc=org -x
+```
 
 
 
