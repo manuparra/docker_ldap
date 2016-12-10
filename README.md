@@ -215,10 +215,10 @@ shadowMax: 0
 shadowWarning: 0
 ```
 
-To add this user to LDAP directory:
+To add this user to LDAP directory (at openstack/org == openstack.org):
 
 ```
-ldapadd -x -D cn=admin,dc=openstack,dc=org -w password -c -f user1.ldif
+ldapadd -x -D "cn=admin,dc=openstack,dc=org" -w password -c -f user1.ldif
 ```
 
 Syntax:
